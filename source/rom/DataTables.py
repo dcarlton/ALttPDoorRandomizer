@@ -1,13 +1,13 @@
 from collections import defaultdict
 
-from Utils import snes_to_pc, int24_as_bytes, int16_as_bytes, load_cached_yaml, pc_to_snes
+from ...Utils import snes_to_pc, int24_as_bytes, int16_as_bytes, load_cached_yaml, pc_to_snes
 
-from source.dungeon.EnemyList import EnemyTable, init_vanilla_sprites, vanilla_sprites, init_enemy_stats, EnemySprite
-from source.dungeon.EnemyList import sprite_translation
-from source.dungeon.RoomHeader import init_room_headers
-from source.dungeon.RoomList import Room0127
-from source.enemizer.OwEnemyList import init_vanilla_sprites_ow, vanilla_sprites_ow
-from source.enemizer.SpriteSheets import init_sprite_sheets, init_sprite_requirements, SheetChoice
+from ..dungeon.EnemyList import EnemyTable, init_vanilla_sprites, vanilla_sprites, init_enemy_stats, EnemySprite
+from ..dungeon.EnemyList import sprite_translation
+from ..dungeon.RoomHeader import init_room_headers
+from ..dungeon.RoomList import Room0127
+from ..enemizer.OwEnemyList import init_vanilla_sprites_ow, vanilla_sprites_ow
+from ..enemizer.SpriteSheets import init_sprite_sheets, init_sprite_requirements, SheetChoice
 
 
 def convert_area_id_to_offset(area_id):
