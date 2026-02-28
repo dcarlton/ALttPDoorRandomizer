@@ -154,7 +154,7 @@ class LocalRom(object):
         self.buffer.extend(bytearray([0x00] * (0x200000 - len(self.buffer))))
 
         # load randomizer patches
-        with open(local_path('data/base2current.bps'), 'rb') as stream:
+        with open(os.path.join(os.path.dirname(__file__), 'data', 'base2current.bps'), 'rb') as stream:
             bps.apply.apply_to_bytearrays(bps.io.read_bps(stream), orig_buffer, self.buffer)
 
         self.create_json_patch(orig_buffer)

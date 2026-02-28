@@ -406,7 +406,7 @@ class World(object):
                         key_list += [x.name for x in dungeon.small_keys]
                     # map/compass may be required now
                     key_list += [x.name for x in dungeon.dungeon_items]
-                from Items import ItemFactory
+                from .Items import ItemFactory
                 for item in ItemFactory(key_list, p):
                     soft_collect(item)
         ret.sweep_for_events()
@@ -2271,7 +2271,7 @@ class Location(object):
         self.name = name
         self.parent_region = parent
         if forced_item is not None:
-            from Items import ItemFactory
+            from .Items import ItemFactory
             self.forced_item = ItemFactory([forced_item], player)[0]
             self.item = self.forced_item
             self.item.location = self

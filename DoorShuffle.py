@@ -238,7 +238,7 @@ def vanilla_key_logic(world, player):
     last_key, loops = None, 0
 
     # --- Precompute all potential portals for each builder using dungeon_portals ---
-    from DungeonGenerator import dungeon_portals
+    from .DungeonGenerator import dungeon_portals
     all_potential_portals_map = {}
     for builder in builders:
         portal_names = list(dungeon_portals.get(builder.name, []))

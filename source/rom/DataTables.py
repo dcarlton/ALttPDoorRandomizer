@@ -1,4 +1,6 @@
 from collections import defaultdict
+import os
+from pathlib import Path
 
 from ...Utils import snes_to_pc, int24_as_bytes, int16_as_bytes, load_cached_yaml, pc_to_snes
 
@@ -42,17 +44,18 @@ class DataTables:
         self.ow_enemy_denials = {}
         self.uw_enemy_drop_denials = {}
         self.sheet_choices = []
-        denial_data = load_cached_yaml(['source', 'enemizer', 'enemy_deny.yaml'])
+        enemizer_dir = os.path.join(Path(__file__).resolve().parent.parent, 'enemizer')
+        denial_data = load_cached_yaml([enemizer_dir, 'enemy_deny.yaml'])
         for denial in denial_data['UwGeneralDeny']:
             self.uw_enemy_denials[denial[0], denial[1]] = {sprite_translation[x] for x in denial[2]}
         for denial in denial_data['OwGeneralDeny']:
             self.ow_enemy_denials[denial[0], denial[1]] = {sprite_translation[x] for x in denial[2]}
         for denial in denial_data['UwEnemyDrop']:
             self.uw_enemy_drop_denials[denial[0], denial[1]] = {sprite_translation[x] for x in denial[2]}
-        weights = load_cached_yaml(['source', 'enemizer', 'enemy_weight.yaml'])
+        weights = load_cached_yaml([enemizer_dir, 'enemy_weight.yaml'])
         self.uw_weights = {sprite_translation[k]: v for k, v in weights['UW'].items()}
         self.ow_weights = {sprite_translation[k]: v for k, v in weights['OW'].items()}
-        sheet_weights = load_cached_yaml(['source', 'enemizer', 'sheet_weight.yaml'])
+        sheet_weights = load_cached_yaml([enemizer_dir, 'sheet_weight.yaml'])
         for item in sheet_weights['SheetChoices']:
             choice = SheetChoice(tuple(item['slots']), item['assignments'], item['weight'])
             self.sheet_choices.append(choice)
@@ -61,6 +64,7 @@ class DataTables:
         if self.pot_secret_table.size() > 0x11c0:
             raise Exception('Pot table is too big for current area')
         self.pot_secret_table.write_pot_data_to_rom(rom, colorize_pots, self)
+        import pdb; pdb.set_trace()
         for room_id, header in self.room_headers.items():
             data_location = (0x30DA00 + room_id * 14) & 0xFFFF
             rom.write_bytes(snes_to_pc(0x04F1E2) + room_id * 2, int16_as_bytes(data_location))
