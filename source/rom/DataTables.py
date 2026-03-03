@@ -64,7 +64,6 @@ class DataTables:
         if self.pot_secret_table.size() > 0x11c0:
             raise Exception('Pot table is too big for current area')
         self.pot_secret_table.write_pot_data_to_rom(rom, colorize_pots, self)
-        import pdb; pdb.set_trace()
         for room_id, header in self.room_headers.items():
             data_location = (0x30DA00 + room_id * 14) & 0xFFFF
             rom.write_bytes(snes_to_pc(0x04F1E2) + room_id * 2, int16_as_bytes(data_location))
